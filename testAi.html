@@ -1,0 +1,151 @@
+<!DOCTYPE html>  
+<html lang="en">  
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>World Geography Quiz</title>  
+    <style>  
+        body {  
+            font-family: Arial, sans-serif;  
+            background-color: #f4f4f4;  
+            padding: 20px;  
+        }  
+        h1 {  
+            text-align: center;  
+        }  
+        .quiz-container {  
+            max-width: 600px;  
+            margin: 0 auto;  
+            background: white;  
+            padding: 20px;  
+            border-radius: 8px;  
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);  
+        }  
+        .question {  
+            margin-bottom: 15px;  
+        }  
+        .options {  
+            margin-bottom: 20px;  
+        }  
+        button {  
+            display: block;  
+            width: 100%;  
+            padding: 10px;  
+            background-color: #28a745;  
+            color: white;  
+            border: none;  
+            border-radius: 5px;  
+            cursor: pointer;  
+        }  
+        button:hover {  
+            background-color: #218838;  
+        }  
+    </style>  
+</head>  
+<body>  
+
+    <div class="quiz-container">  
+        <h1>World Geography Quiz</h1>  
+        <div id="quiz"></div>  
+        <button id="submit">Submit Quiz</button>  
+        <div id="results"></div>  
+    </div>  
+
+    <script>  
+        // Quiz Questions  
+        const quizQuestions = [  
+            {  
+                question: "Which country has the largest land area in the world?",  
+                options: ["Canada", "Russia", "China", "United States"],  
+                answer: 1  
+            },  
+            {  
+                question: "What is the longest river in the world?",  
+                options: ["Amazon River", "Nile River", "Yangtze River", "Mississippi River"],  
+                answer: 1  
+            },  
+            {  
+                question: "The Great Barrier Reef is located off the coast of which country?",  
+                options: ["USA", "Australia", "South Africa", "India"],  
+                answer: 1  
+            },  
+            {  
+                question: "Which desert is the largest in the world?",  
+                options: ["Sahara", "Arabian", "Gobi", "Kalahari"],  
+                answer: 0  
+            },  
+            {  
+                question: "What is the capital city of Japan?",  
+                options: ["Beijing", "Seoul", "Tokyo", "Bangkok"],  
+                answer: 2  
+            },  
+            {  
+                question: "Which mountain is known as the highest peak in the world?",  
+                options: ["K2", "Mount Kilimanjaro", "Mount Everest", "Mont Blanc"],  
+                answer: 2  
+            },  
+            {  
+                question: "Which continent is known as the 'Dark Continent'?",  
+                options: ["Asia", "Africa", "South America", "Antarctica"],  
+                answer: 1  
+            },  
+            {  
+                question: "Which city is famous for its canals and gondolas?",  
+                options: ["Amsterdam", "Venice", "Cairo", "Bangkok"],  
+                answer: 1  
+            },  
+            {  
+                question: "What is the smallest country in the world by land area?",  
+                options: ["Monaco", "Nauru", "Vatican City", "San Marino"],  
+                answer: 2  
+            },  
+            {  
+                question: "Fill in the blank: The Andes mountain range is primarily located in ______.",  
+                options: ["North America", "Australia", "Europe", "South America"],  
+                answer: 3  
+            }  
+        ];  
+
+        // Function to generate quiz HTML  
+        function generateQuiz() {  
+            const quizContainer = document.getElementById("quiz");  
+            quizQuestions.forEach((question, index) => {  
+                const questionHTML = `  
+                    <div class="question">  
+                        <div>${index + 1}. ${question.question}</div>  
+                        <div class="options">  
+                            ${question.options.map((option, i) => `  
+                                <label>  
+                                    <input type="radio" name="question${index}" value="${i}"> ${option}  
+                                </label><br>  
+                            `).join('')}  
+                        </div>  
+                    </div>  
+                `;  
+                quizContainer.innerHTML += questionHTML;  
+            });  
+        }  
+
+        // Function to check answers and display results  
+        function showResults() {  
+            let score = 0;  
+            quizQuestions.forEach((question, index) => {  
+                const selectedOption = document.querySelector(`input[name="question${index}"]:checked`);  
+                if (selectedOption && +selectedOption.value === question.answer) {  
+                    score++;  
+                }  
+            });  
+
+            const resultsContainer = document.getElementById("results");  
+            resultsContainer.innerHTML = `<h2>Your score: ${score} out of ${quizQuestions.length}</h2>`;  
+        }  
+
+        // Event listener for the submit button  
+        document.getElementById("submit").addEventListener("click", showResults);  
+
+        // Generate the quiz on page load  
+        generateQuiz();  
+
+    </script>  
+</body>  
+</html>
