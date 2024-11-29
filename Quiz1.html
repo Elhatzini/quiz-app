@@ -1,0 +1,151 @@
+<!DOCTYPE html>  
+<html lang="en">  
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>World Geography Quiz</title>  
+    <style>  
+        body {  
+            font-family: Arial, sans-serif;  
+            background-color: #f4f4f4;  
+            padding: 20px;  
+        }  
+        h1 {  
+            text-align: center;  
+        }  
+        .quiz-container {  
+            max-width: 600px;  
+            margin: 0 auto;  
+            background: white;  
+            padding: 20px;  
+            border-radius: 8px;  
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);  
+        }  
+        .question {  
+            margin-bottom: 15px;  
+        }  
+        .options {  
+            margin-bottom: 20px;  
+        }  
+        button {  
+            display: block;  
+            width: 100%;  
+            padding: 10px;  
+            background-color: #28a745;  
+            color: white;  
+            border: none;  
+            border-radius: 5px;  
+            cursor: pointer;  
+        }  
+        button:hover {  
+            background-color: #218838;  
+        }  
+    </style>  
+</head>  
+<body>  
+
+    <div class="quiz-container">  
+        <h1>Τεστ Microsoft Word</h1>  
+        <div id="quiz"></div>  
+        <button id="submit">Καταχώρηση</button>  
+        <div id="results"></div>  
+    </div>  
+
+    <script>  
+        // Quiz Questions  
+        const quizQuestions = [  
+            {  
+                question: "Επιλέξτε ποια από τις παρακάτω αντιστοιχήσεις των γραμμάτων με εργασίες μορφοποίησης είναι η σωστή:",  
+                options: [" Ι : έντονα,    Β: πλάγια,  U:Υπογραμμισμένα", "Ι : έντονα,    Β: Υπογραμμισμένα,  U:πλάγια", " Ι : πλάγια,    Β: έντονα,  U:Υπογραμμισμένα", " Ι : πλάγια,    Β: Υπογραμμισμένα,  U:πλάγια"],  
+                answer: 2  
+            },  
+            {  
+                question: "Ποια συντόμευση πληκτρολογίου χρησιμοποιείται για να αποθηκεύσετε ένα έγγραφο;",  
+                options: ["Ctrl + A", "Ctrl + P", "Ctrl + S", "Ctrl + C"],  
+                answer: 2  
+            },  
+            {  
+                question: "Πώς μπορείτε να προσθέσετε έναν αριθμό σελίδας σε ένα έγγραφο;",  
+                options: ["Κάνετε κλικ στην καρτέλα 'Διάταξη'", "Κάνετε κλικ στην καρτέλα 'Εισαγωγή'", "Κάνετε κλικ στην καρτέλα 'Ανασκόπηση'", "Κάνετε κλικ στην καρτέλα 'Εκτύπωση'"],  
+                answer: 1  
+            },  
+            {  
+                question: "Ποια είναι η συντόμευση για την εύρεση κειμένου σε ένα έγγραφο;",  
+                options: ["Ctrl + H", "Ctrl + R", "Ctrl + F", "Ctrl + E"],  
+                answer: 2  
+            },  
+            {  
+                question: "Ποια είναι η επέκταση των αρχείων word",  
+                options: ["txt", "pdf", "docx", "doc"],  
+                answer: 2  
+            },  
+            {  
+                question: "Ποιο από τα παρακάτω χρησιμοποιείται για να κάνει το κείμενο έντονο στο Word;",  
+                options: ["Ctrl + U", "Ctrl + B", "Ctrl + I", "Ctrl + Z"],  
+                answer: 1  
+            },  
+            {  
+                question: "Στον επεξεργαστή κειμένου Microsoft Word",  
+                options: ["Μπορούμε να αναιρέσουμε μόνο την τελευταία ενέργεια που κάναμε", "Μπορούμε να αναιρέσουμε όλες τις  ενέργειες που κάναμε", "Μπορούμε να αναιρέσουμε επιλεκτικά την προτελευταία ενέργεια που κάναμε χωρίς να αναιρέσουμε καμμία άλλη", "Εάν κλείσω το έγγραφο που δούλευα και αμέσως μετά το ξανανοίξω μπορώ να εκτελέσω αναίρεση μόνο για την τελευταία ενέργεια"],  
+                answer: 1  
+            },  
+            {  
+                question: "Το εικονίδιο με το ψαλίδι σημαίνει:",  
+                options: ["Έντονα γράμματα.", "Άνοιγμα έγγραφου", "Aποκοπή", "Eπικόλληση"],  
+                answer: 2  
+            },  
+            {  
+                question: "Για να σβήσουμε ένα χαρακτήρα που βρίσκεται αριστερά από τον δρομέα(κέρσορα) θα χρησιμοποιήσουμε το πλήκτρο",  
+                options: ["Delete", "Backspace", "Το Δεξιό Βέλος", "Το Αριστερό Βέλος"],  
+                answer: 1  
+            },  
+            {  
+                question: "Καθώς πληκτρολογώ κείµενο µια λέξη υπογραµµίζεται µε κόκκινη γραµµή γιατί:",  
+                options: ["είναι υπερσύνδεση", "είναι γραµµατικά λανθασµένη", "είναι συντακτικά λανθασµένη"],  
+                answer: 1  
+            }  
+        ];  
+
+        // Function to generate quiz HTML  
+        function generateQuiz() {  
+            const quizContainer = document.getElementById("quiz");  
+            quizQuestions.forEach((question, index) => {  
+                const questionHTML = `  
+                    <div class="question">  
+                        <div>${index + 1}. ${question.question}</div>  
+                        <div class="options">  
+                            ${question.options.map((option, i) => `  
+                                <label>  
+                                    <input type="radio" name="question${index}" value="${i}"> ${option}  
+                                </label><br>  
+                            `).join('')}  
+                        </div>  
+                    </div>  
+                `;  
+                quizContainer.innerHTML += questionHTML;  
+            });  
+        }  
+
+        // Function to check answers and display results  
+        function showResults() {  
+            let score = 0;  
+            quizQuestions.forEach((question, index) => {  
+                const selectedOption = document.querySelector(`input[name="question${index}"]:checked`);  
+                if (selectedOption && +selectedOption.value === question.answer) {  
+                    score++;  
+                }  
+            });  
+
+            const resultsContainer = document.getElementById("results");  
+            resultsContainer.innerHTML = `<h2>Χρήστο απάντησες σωστά σε: ${score} από τις  ${quizQuestions.length} ερωτήσεις </h2>`;  
+        }  
+
+        // Event listener for the submit button  
+        document.getElementById("submit").addEventListener("click", showResults);  
+
+        // Generate the quiz on page load  
+        generateQuiz();  
+
+    </script>  
+</body>  
+</html>
